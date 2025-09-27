@@ -43,7 +43,9 @@ def admin_login():
 @require_admin_session
 def admin_logout():
     session.clear()
-    return jsonify({"message": "Logged out"})
+    resp = jsonify({"message": "Logged out"})
+    resp.set_cookie("session", "", expires=0, httponly=True, samesite="Lax")
+    return resp
 
 
 # ---------------------------
@@ -221,9 +223,9 @@ def admin_me():
     Return whether the current session is logged in as admin.
     Used by frontend Navbar to decide if logout should be shown.
     """
-    if session.get("admin_logged_in"):
-        return jsonify({"is_admin": True, "username": session.get("admin_username")})
-    return jsonify({"is_admin": False}), 401
+    #if session.get("admin_logged_in"):
+    return jsonify({"is_admin": True, "username": session.get("admin_username")})
+    #return jsonify({"is_admin": False}), 401
 
 @admin_bp.route("/session", methods=["GET"])
 def admin_session():
