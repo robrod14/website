@@ -1,0 +1,2 @@
+curl -L -o appsync-unified-116.deb \
+"https://sourceforge.net/projects/appsync.mirror/files/116.0/ai.akemi.appsyncunified_116.0_iphoneos-arm64.akemi-git-235aca6cddfbdc9fa87fcb5b2aec2df37ed6d65a.deb/download"
