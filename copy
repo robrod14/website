@@ -23,4 +23,55 @@ Errors were encountered while processing:
 curl -L -o appinst_1.1.4.deb \
   "https://cydiacrawler.com/index.php?cat=package&id=com.linusyang.appinstappcake"
 
+def list_installed_apps_via_ideviceinstaller() -> List[Tuple[str,str]]:
+    """
+    Returns a list of (bundle_id, app_name) tuples from `ideviceinstaller -l`.
+    Requires ideviceinstaller on PATH.
+    """
+    try:
+        out = subprocess.check_output(["ideviceinstaller", "-l"], text=True, stderr=subprocess.DEVNULL)
+    except FileNotFoundError:
+        return []
+    except subprocess.CalledProcessError:
+        # Could still return partial output; fall back to empty
+        return []
+
+    apps = []
+    for line in out.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        # Expected format: "com.example.app - App Name"
+        parts = line.split(" - ", 1)
+        if len(parts) == 2:
+            bundle, name = parts[0].strip(), parts[1].strip()
+            apps.append((bundle, name))
+        else:
+            # If format differs, attempt a best-effort parse
+            tokens = line.split()
+            if tokens:
+                bundle = tokens[0]
+                name = " ".join(tokens[1:]) if len(tokens) > 1 else ""
+                apps.append((bundle, name))
+    return apps
+
+
+
+
+from core.ios_runtime import list_installed_apps_via_ideviceinstaller
+
+def choose_ios_app():
+    apps = list_installed_apps_via_ideviceinstaller()
+    if not apps:
+        print("No apps found (ideviceinstaller not available or no device).")
+        return None
+    for i, (bundle, name) in enumerate(apps, start=1):
+        print(f"{i}) {name} — {bundle}")
+    choice = input("Select app by number (or enter bundle id): ").strip()
+    if choice.isdigit():
+        idx = int(choice) - 1
+        if 0 <= idx < len(apps):
+            return apps[idx][0]
+    # allow direct bundle id entry
+    return choice
 
