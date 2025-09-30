@@ -1,2 +1,21 @@
 curl -L -o appsync-unified-116.deb \
 "https://sourceforge.net/projects/appsync.mirror/files/116.0/ai.akemi.appsyncunified_116.0_iphoneos-arm64.akemi-git-235aca6cddfbdc9fa87fcb5b2aec2df37ed6d65a.deb/download"
+
+
+iPhone:/private/var/tmp root# dpkg -i /tmp/appsync-unified-116.deb 
+dpkg: warning: parsing file '/var/jb/Library/dpkg/tmp.ci/control' near line 1:
+ 'Conflicts' field, reference to 'ellekit':
+ '<' is obsolete, use '<=' or '<<' instead
+Selecting previously unselected package ai.akemi.appsyncunified.
+(Reading database ... 6905 files and directories currently installed.)
+Preparing to unpack /tmp/appsync-unified-116.deb ...
+Unpacking ai.akemi.appsyncunified (116.0) ...
+dpkg: dependency problems prevent configuration of ai.akemi.appsyncunified:
+ ai.akemi.appsyncunified depends on mobilesubstrate (>= 0.9.5100); however:
+  Package mobilesubstrate is not installed.
+
+dpkg: error processing package ai.akemi.appsyncunified (--install):
+ dependency problems - leaving unconfigured
+Processing triggers for org.coolstar.sileo (2.5.1) ...
+Errors were encountered while processing:
+ ai.akemi.appsyncunified
