@@ -20,5 +20,7 @@ Processing triggers for org.coolstar.sileo (2.5.1) ...
 Errors were encountered while processing:
  ai.akemi.appsyncunified
 
-https://cydiacrawler.com/index.php?cat=package&id=com.linusyang.appinstappcake
+curl -L -o appinst_1.1.4.deb \
+  "https://cydiacrawler.com/index.php?cat=package&id=com.linusyang.appinstappcake"
+
 
